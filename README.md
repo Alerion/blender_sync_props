@@ -1,0 +1,1 @@
+# blender_sync_props
