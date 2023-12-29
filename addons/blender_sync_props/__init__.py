@@ -102,6 +102,8 @@ classes = (
     SP_PT_SharePropertiesPanel,
 )
 
+addon_keymaps = []
+
 
 def register() -> None:
     for cls in classes:
@@ -109,11 +111,30 @@ def register() -> None:
 
     bpy.types.Scene.addon_sync_props_source_object = bpy.props.PointerProperty(type=bpy.types.Object)
 
+    # Add a keymap entry
+    global addon_keymaps
+    window_manager = bpy.context.window_manager
+    if key_config := window_manager.keyconfigs.addon:
+        print(1111)
+        key_map = key_config.keymaps.new(name="3D View", space_type='VIEW_3D')
+        key_map_index = key_map.keymap_items.new(SyncPropertiesOperator.bl_idname, type="Q", value="PRESS", alt=True)
+        addon_keymaps.append((key_map, key_map_index))
+    else:
+        print('Keyconfig unavailable, no keybinding items registered')
+
+
 def unregister() -> None:
     for cls in classes:
         bpy.utils.unregister_class(cls)
         
     del bpy.types.Scene.addon_sync_props_source_object
+
+    # Remove the keymap entry
+    global addon_keymaps
+    window_manager = bpy.context.window_manager
+    for key_map, key_map_index in addon_keymaps:
+        key_map.keymap_items.remove(key_map_index)
+    addon_keymaps.clear()
 
 
 if __name__ == "__main__":
