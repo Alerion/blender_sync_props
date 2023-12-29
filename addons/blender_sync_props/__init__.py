@@ -94,7 +94,7 @@ class SP_PT_SharePropertiesPanel(bpy.types.Panel):
         col = layout.column(align=True)
         col.label(text=f"View Layer: {view_layer.name}")
         col.prop_search(context.scene, "addon_sync_props_source_object", context.scene, "objects", text="")
-        col.operator(SyncPropertiesOperator.bl_idname, text="Sync Properties")
+        col.operator(SyncPropertiesOperator.bl_idname, text="Sync Properties (Alt+Q)")
 
         
 classes = (
