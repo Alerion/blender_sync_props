@@ -115,7 +115,6 @@ def register() -> None:
     global addon_keymaps
     window_manager = bpy.context.window_manager
     if key_config := window_manager.keyconfigs.addon:
-        print(1111)
         key_map = key_config.keymaps.new(name="3D View", space_type='VIEW_3D')
         key_map_index = key_map.keymap_items.new(SyncPropertiesOperator.bl_idname, type="Q", value="PRESS", alt=True)
         addon_keymaps.append((key_map, key_map_index))
